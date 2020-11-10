@@ -1,0 +1,23 @@
+[
+  {
+    "Id": 2,
+    "Username": "torres",
+    "Posicao": "Atacante",
+    "Telefone": "5151848",
+    "Cpf": 1235888
+  },
+  {
+    "Id": 3,
+    "Username": "hugooliveira19",
+    "Posicao": "Defensor",
+    "Telefone": "5151889987",
+    "Cpf": 123555
+  },
+  {
+    "Id": 4,
+    "Username": "rossi21",
+    "Posicao": "Defensor",
+    "Telefone": "515999991",
+    "Cpf": 12399911
+  }
+]

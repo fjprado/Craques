@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Craques", "Craques\Craques.csproj", "{1E47D4F8-5625-4364-80CE-642AF61179CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E47D4F8-5625-4364-80CE-642AF61179CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E47D4F8-5625-4364-80CE-642AF61179CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E47D4F8-5625-4364-80CE-642AF61179CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E47D4F8-5625-4364-80CE-642AF61179CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {403850D6-229B-48D9-9163-5BE3ABF18696}
+	EndGlobalSection
+EndGlobal
