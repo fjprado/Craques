@@ -1,6 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -13,8 +16,11 @@ namespace Craques.Models
         public int Id { get; set; }
         public string Username { get; set; }
         public string Posicao { get; set; }
+        public DateTime DataCadastro { get; set; }
+        public int NivelAtaque { get; set; }
+        public int NivelDefesa { get; set; }
         public string Telefone { get; set; }
-        public int Cpf { get; set; }
+        public string Email { get; set; }
         public List<Craque> ListarCraque()
         {
             var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
@@ -23,6 +29,38 @@ namespace Craques.Models
             return listaCraques;
         }
 
+
+        public List<Craque> ListarCraquesDB()
+        {
+            string stringConexao = ConfigurationManager.ConnectionStrings["conexaoDev"].ConnectionString;
+            IDbConnection conexao;
+
+            conexao = new SqlConnection(stringConexao);
+            conexao.Open();
+            var listaCraques = new List<Craque>();
+
+            IDbCommand selectCmd = conexao.CreateCommand();
+            selectCmd.CommandText = "select * from Craques";
+
+            IDataReader resultado = selectCmd.ExecuteReader();
+            while (resultado.Read())
+            {
+                var craqueDb = new Craque();
+                craqueDb.Id = Convert.ToInt32(resultado["Id"]);
+                craqueDb.Username = Convert.ToString(resultado["Username"]);
+                craqueDb.Posicao = Convert.ToString(resultado["Posicao"]);
+                craqueDb.DataCadastro = Convert.ToDateTime(resultado["DataCadastro"]);
+                craqueDb.NivelAtaque = Convert.ToInt32(resultado["NivelAtaque"]);
+                craqueDb.NivelDefesa = Convert.ToInt32(resultado["NivelDefesa"]);
+                craqueDb.Telefone = Convert.ToString(resultado["Telefone"]);
+                craqueDb.Email = Convert.ToString(resultado["Email"]);
+
+                listaCraques.Add(craqueDb);
+            }
+            conexao.Close();
+
+            return listaCraques;
+        }
         public bool RescreverArquivo(List<Craque> listaCraques)
         {
             var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");

@@ -3,6 +3,7 @@
     "Id": 2,
     "Username": "torres",
     "Posicao": "Atacante",
+    "Data": "11-2020",
     "Telefone": "5151848",
     "Cpf": 1235888
   },
@@ -10,6 +11,7 @@
     "Id": 3,
     "Username": "hugooliveira19",
     "Posicao": "Defensor",
+    "Data": "10-2019",
     "Telefone": "5151889987",
     "Cpf": 123555
   },
@@ -17,6 +19,7 @@
     "Id": 4,
     "Username": "rossi21",
     "Posicao": "Defensor",
+    "Data": "10-2020",
     "Telefone": "515999991",
     "Cpf": 12399911
   }
