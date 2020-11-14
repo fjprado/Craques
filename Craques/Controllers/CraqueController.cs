@@ -22,7 +22,7 @@ namespace Craques.Controllers
             try
             {
                 Craque craque = new Craque();
-                return Ok(craque.ListarCraquesDB());
+                return Ok(craque.ListarCraque());
             }
             catch (Exception ex)
             {

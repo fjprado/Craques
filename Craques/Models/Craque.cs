@@ -21,46 +21,29 @@ namespace Craques.Models
         public int NivelDefesa { get; set; }
         public string Telefone { get; set; }
         public string Email { get; set; }
+
+        //Banco de dados com arquivo Base.json - Listar dados
+        //public List<Craque> ListarCraque()
+        //{
+        //    var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
+        //    var json = File.ReadAllText(caminhoArquivo);
+        //    var listaCraques = JsonConvert.DeserializeObject<List<Craque>>(json);
+        //    return listaCraques;
+        //}
+
         public List<Craque> ListarCraque()
         {
-            var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
-            var json = File.ReadAllText(caminhoArquivo);
-            var listaCraques = JsonConvert.DeserializeObject<List<Craque>>(json);
-            return listaCraques;
-        }
-
-
-        public List<Craque> ListarCraquesDB()
-        {
-            string stringConexao = ConfigurationManager.ConnectionStrings["conexaoDev"].ConnectionString;
-            IDbConnection conexao;
-
-            conexao = new SqlConnection(stringConexao);
-            conexao.Open();
-            var listaCraques = new List<Craque>();
-
-            IDbCommand selectCmd = conexao.CreateCommand();
-            selectCmd.CommandText = "select * from Craques";
-
-            IDataReader resultado = selectCmd.ExecuteReader();
-            while (resultado.Read())
+            try
             {
-                var craqueDb = new Craque();
-                craqueDb.Id = Convert.ToInt32(resultado["Id"]);
-                craqueDb.Username = Convert.ToString(resultado["Username"]);
-                craqueDb.Posicao = Convert.ToString(resultado["Posicao"]);
-                craqueDb.DataCadastro = Convert.ToDateTime(resultado["DataCadastro"]);
-                craqueDb.NivelAtaque = Convert.ToInt32(resultado["NivelAtaque"]);
-                craqueDb.NivelDefesa = Convert.ToInt32(resultado["NivelDefesa"]);
-                craqueDb.Telefone = Convert.ToString(resultado["Telefone"]);
-                craqueDb.Email = Convert.ToString(resultado["Email"]);
-
-                listaCraques.Add(craqueDb);
+                var craqueBD = new CraqueDAO();
+                return craqueBD.ListarCraquesDB();
             }
-            conexao.Close();
-
-            return listaCraques;
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao listar craques: {ex.Message}");
+            }
         }
+                
         public bool RescreverArquivo(List<Craque> listaCraques)
         {
             var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
@@ -70,17 +53,31 @@ namespace Craques.Models
             return true;
         }
 
+        //Banco de dados com arquivo Base.json - Inserir dados
+        //public Craque Inserir(Craque Craque)
+        //{
+        //    var listaCraques = this.ListarCraque();
 
-        public Craque Inserir(Craque Craque)
+        //    var maxId = listaCraques.Max(item => item.Id);
+        //    Craque.Id = maxId + 1;
+        //    listaCraques.Add(Craque);
+
+        //    RescreverArquivo(listaCraques);
+        //    return Craque;
+        //}
+
+        public void Inserir(Craque craque)
         {
-            var listaCraques = this.ListarCraque();
-
-            var maxId = listaCraques.Max(item => item.Id);
-            Craque.Id = maxId + 1;
-            listaCraques.Add(Craque);
-
-            RescreverArquivo(listaCraques);
-            return Craque;
+            craque.DataCadastro = DateTime.Now;
+            try
+            {
+                var craqueBD = new CraqueDAO();
+                craqueBD.InserirCraqueDB(craque);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao inserir craques: {ex.Message}");
+            }
         }
 
         public Craque Atualizar(int id, Craque Craque)
