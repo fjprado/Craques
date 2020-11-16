@@ -74,8 +74,9 @@ namespace Craques.Controllers
         public Craque Put(int id, [FromBody] Craque craque)
         {
             Craque _craque = new Craque();
-
-            return _craque.Atualizar(id, craque);
+            craque.Id = id;
+            _craque.Atualizar(craque);
+            return _craque.ListarCraque().FirstOrDefault(craq => craq.Id == id);
         }
 
         // DELETE: api/Craque/5

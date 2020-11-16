@@ -67,5 +67,31 @@ namespace Craques.Models
 
             insertCmd.ExecuteNonQuery();
         }
+
+        public void AtualizarCraqueDB(Craque craque)
+        {
+            IDbCommand updateCmd = conexao.CreateCommand();
+            updateCmd.CommandText = "update Craques set Username = @Username, Posicao = @Posicao, NivelAtaque = @NivelAtaque, NivelDefesa = @NivelDefesa, Telefone = @Telefone, Email = @Email where Id = @Id";
+
+            IDbDataParameter paramUsername = new SqlParameter("Username", craque.Username);
+            IDbDataParameter paramPosicao = new SqlParameter("Posicao", craque.Posicao);
+            IDbDataParameter paramDataCadastro = new SqlParameter("DataCadastro", craque.DataCadastro);
+            IDbDataParameter paramNivelAtaque = new SqlParameter("NivelAtaque", craque.NivelAtaque);
+            IDbDataParameter paramNivelDefesa = new SqlParameter("NivelDefesa", craque.NivelDefesa);
+            IDbDataParameter paramTelefone = new SqlParameter("Telefone", craque.Telefone);
+            IDbDataParameter paramEmail = new SqlParameter("Email", craque.Email);
+            updateCmd.Parameters.Add(paramUsername);
+            updateCmd.Parameters.Add(paramPosicao);
+            updateCmd.Parameters.Add(paramDataCadastro);
+            updateCmd.Parameters.Add(paramNivelAtaque);
+            updateCmd.Parameters.Add(paramNivelDefesa);
+            updateCmd.Parameters.Add(paramTelefone);
+            updateCmd.Parameters.Add(paramEmail);
+
+            IDbDataParameter paramId = new SqlParameter("Id", craque.Id);
+            updateCmd.Parameters.Add(paramId);
+
+            updateCmd.ExecuteNonQuery();
+        }
     }
 }

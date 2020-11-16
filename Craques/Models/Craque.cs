@@ -44,14 +44,6 @@ namespace Craques.Models
             }
         }
                 
-        public bool RescreverArquivo(List<Craque> listaCraques)
-        {
-            var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
-            var json = JsonConvert.SerializeObject(listaCraques, Formatting.Indented);
-            File.WriteAllText(caminhoArquivo, json);
-
-            return true;
-        }
 
         //Banco de dados com arquivo Base.json - Inserir dados
         //public Craque Inserir(Craque Craque)
@@ -76,27 +68,52 @@ namespace Craques.Models
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao inserir craques: {ex.Message}");
+                throw new Exception($"Erro ao INSERIR craques: {ex.Message}");
             }
         }
 
-        public Craque Atualizar(int id, Craque Craque)
+        //Banco de dados com arquivo Base.json - Atualizar dados
+
+        //public Craque Atualizar(int id, Craque Craque)
+        //{
+        //    var listaCraques = this.ListarCraque();
+
+        //    var itemIndex = listaCraques.FindIndex(item => item.Id == id);
+        //    if (itemIndex >= 0)
+        //    {
+        //        Craque.Id = id;
+        //        listaCraques[itemIndex] = Craque;
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
+
+        //    RescreverArquivo(listaCraques);
+        //    return Craque;
+        //}
+
+        public bool RescreverArquivo(List<Craque> listaCraques)
         {
-            var listaCraques = this.ListarCraque();
+            var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
+            var json = JsonConvert.SerializeObject(listaCraques, Formatting.Indented);
+            File.WriteAllText(caminhoArquivo, json);
 
-            var itemIndex = listaCraques.FindIndex(item => item.Id == id);
-            if (itemIndex >= 0)
-            {
-                Craque.Id = id;
-                listaCraques[itemIndex] = Craque;
-            }
-            else
-            {
-                return null;
-            }
+            return true;
+        }
 
-            RescreverArquivo(listaCraques);
-            return Craque;
+        public void Atualizar(Craque craque)
+        {
+            craque.DataCadastro = DateTime.Now;
+            try
+            {
+                var craqueBD = new CraqueDAO();
+                craqueBD.AtualizarCraqueDB(craque);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao ATUALIZAR craques: {ex.Message}");
+            }
         }
 
         public bool Deletar(int id)
