@@ -31,12 +31,12 @@ namespace Craques.Models
         //    return listaCraques;
         //}
 
-        public List<Craque> ListarCraque()
+        public List<Craque> ListarCraque(int? id = null)
         {
             try
             {
                 var craqueBD = new CraqueDAO();
-                return craqueBD.ListarCraquesDB();
+                return craqueBD.ListarCraquesDB(id);
             }
             catch (Exception ex)
             {
@@ -68,7 +68,7 @@ namespace Craques.Models
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao INSERIR craques: {ex.Message}");
+                throw new Exception($"Erro ao INSERIR craque: {ex.Message}");
             }
         }
 
@@ -104,7 +104,6 @@ namespace Craques.Models
 
         public void Atualizar(Craque craque)
         {
-            craque.DataCadastro = DateTime.Now;
             try
             {
                 var craqueBD = new CraqueDAO();
@@ -112,26 +111,40 @@ namespace Craques.Models
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao ATUALIZAR craques: {ex.Message}");
+                throw new Exception($"Erro ao ATUALIZAR craque: {ex.Message}");
             }
         }
 
-        public bool Deletar(int id)
+        //Banco de dados com arquivo Base.json - Deletar dados
+        //public bool Deletar(int id)
+        //{
+        //    var listaCraques = this.ListarCraque();
+
+        //    var itemIndex = listaCraques.FindIndex(item => item.Id == id);
+        //    if (itemIndex >= 0)
+        //    {
+        //        listaCraques.RemoveAt(itemIndex);
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+
+        //    RescreverArquivo(listaCraques);
+        //    return true;
+        //}
+
+        public void Deletar(int id)
         {
-            var listaCraques = this.ListarCraque();
-
-            var itemIndex = listaCraques.FindIndex(item => item.Id == id);
-            if (itemIndex >= 0)
+            try
             {
-                listaCraques.RemoveAt(itemIndex);
+                var craqueDB = new CraqueDAO();
+                craqueDB.DeletarCraqueDB(id);
             }
-            else
+            catch (Exception ex)
             {
-                return false;
+                throw new Exception($"Erro ao DELETAR craque: {ex.Message}");
             }
-
-            RescreverArquivo(listaCraques);
-            return true;
         }
     }
 }

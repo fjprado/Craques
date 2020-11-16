@@ -18,12 +18,15 @@ namespace Craques.Models
             conexao.Open();
         }
 
-        public List<Craque> ListarCraquesDB()
+        public List<Craque> ListarCraquesDB(int? id)
         {
             var listaCraques = new List<Craque>();
 
             IDbCommand selectCmd = conexao.CreateCommand();
-            selectCmd.CommandText = "select * from Craques";
+            if(id == null)
+                selectCmd.CommandText = "select * from Craques";
+            else
+                selectCmd.CommandText = $"select * from Craques where id = {id}";
 
             IDataReader resultado = selectCmd.ExecuteReader();
             while (resultado.Read())
@@ -92,6 +95,17 @@ namespace Craques.Models
             updateCmd.Parameters.Add(paramId);
 
             updateCmd.ExecuteNonQuery();
+        }
+
+        public void DeletarCraqueDB(int id)
+        {
+            IDbCommand deleteCmd = conexao.CreateCommand();
+            deleteCmd.CommandText = "delete from Craques where Id = @Id";
+
+            IDbDataParameter paramId = new SqlParameter("Id", id);
+            deleteCmd.Parameters.Add(paramId);
+
+            deleteCmd.ExecuteNonQuery();
         }
     }
 }

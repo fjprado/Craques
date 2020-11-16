@@ -37,7 +37,7 @@ namespace Craques.Controllers
         public Craque Get(int id)
         {
             Craque craque = new Craque();
-            return craque.ListarCraque().Where(item => item.Id == id).FirstOrDefault();
+            return craque.ListarCraque(id).FirstOrDefault();
         }
 
         //[HttpGet]
