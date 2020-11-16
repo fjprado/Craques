@@ -63,29 +63,54 @@ namespace Craques.Controllers
         //}
 
         // POST: api/Craque
-        public List<Craque> Post(Craque craque)
+        [HttpPost]
+        public IHttpActionResult Post(Craque craque)
         {
-            Craque _craque = new Craque();
-            _craque.Inserir(craque);
-            return _craque.ListarCraque();
+            try
+            {
+                Craque _craque = new Craque();
+                _craque.Inserir(craque);
+                return Ok(_craque.ListarCraque());
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+            
         }
 
         // PUT: api/Craque/5
-        public Craque Put(int id, [FromBody] Craque craque)
+        [HttpPut]
+        public IHttpActionResult Put(int id, [FromBody] Craque craque)
         {
-            Craque _craque = new Craque();
-            craque.Id = id;
-            _craque.Atualizar(craque);
-            return _craque.ListarCraque().FirstOrDefault(craq => craq.Id == id);
+            try
+            {
+                Craque _craque = new Craque();
+                craque.Id = id;
+                _craque.Atualizar(craque);
+                return Ok(_craque.ListarCraque().FirstOrDefault(craq => craq.Id == id));
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }            
         }
 
         // DELETE: api/Craque/5
-        public string Delete(int id)
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
         {
-            Craque _craque = new Craque();
+            try
+            {
+                Craque _craque = new Craque();
 
-            _craque.Deletar(id);
-            return $"Craque ID {id} removido com sucesso";
+                _craque.Deletar(id);
+                return Ok($"Craque ID {id} removido com sucesso");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }
