@@ -74,6 +74,9 @@ namespace Craques.Controllers
         [HttpPost]
         public IHttpActionResult Post(CraqueDTO craque)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
                 CraqueModel _craque = new CraqueModel();
