@@ -21,91 +21,135 @@ namespace Craques.Models
         public List<Craque> ListarCraquesDB(int? id)
         {
             var listaCraques = new List<Craque>();
-
-            IDbCommand selectCmd = conexao.CreateCommand();
-            if(id == null)
-                selectCmd.CommandText = "select * from Craques";
-            else
-                selectCmd.CommandText = $"select * from Craques where id = {id}";
-
-            IDataReader resultado = selectCmd.ExecuteReader();
-            while (resultado.Read())
+            try
             {
-                var craqueDb = new Craque();
-                craqueDb.Id = Convert.ToInt32(resultado["Id"]);
-                craqueDb.Username = Convert.ToString(resultado["Username"]);
-                craqueDb.Posicao = Convert.ToString(resultado["Posicao"]);
-                craqueDb.DataCadastro = Convert.ToDateTime(resultado["DataCadastro"]);
-                craqueDb.NivelAtaque = Convert.ToInt32(resultado["NivelAtaque"]);
-                craqueDb.NivelDefesa = Convert.ToInt32(resultado["NivelDefesa"]);
-                craqueDb.Telefone = Convert.ToString(resultado["Telefone"]);
-                craqueDb.Email = Convert.ToString(resultado["Email"]);
+                IDbCommand selectCmd = conexao.CreateCommand();
+                if (id == null)
+                    selectCmd.CommandText = "select * from Craques";
+                else
+                    selectCmd.CommandText = $"select * from Craques where id = {id}";
 
-                listaCraques.Add(craqueDb);
+                IDataReader resultado = selectCmd.ExecuteReader();
+                while (resultado.Read())
+                {
+                    var craqueDb = new Craque
+                    {
+                        Id = Convert.ToInt32(resultado["Id"]),
+                        Username = Convert.ToString(resultado["Username"]),
+                        Posicao = Convert.ToString(resultado["Posicao"]),
+                        DataCadastro = Convert.ToDateTime(resultado["DataCadastro"]),
+                        NivelAtaque = Convert.ToInt32(resultado["NivelAtaque"]),
+                        NivelDefesa = Convert.ToInt32(resultado["NivelDefesa"]),
+                        Telefone = Convert.ToString(resultado["Telefone"]),
+                        Email = Convert.ToString(resultado["Email"])
+                    };
+
+                    listaCraques.Add(craqueDb);
+                }
+
+                return listaCraques;
             }
-            conexao.Close();
-
-            return listaCraques;
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                conexao.Close();
+            }
         }
 
         public void InserirCraqueDB(Craque craque)
         {
-            IDbCommand insertCmd = conexao.CreateCommand();
-            insertCmd.CommandText = "insert into Craques (Username, Posicao, DataCadastro, NivelAtaque, NivelDefesa, Telefone, Email) values (@Username, @Posicao, @DataCadastro, @NivelAtaque, @NivelDefesa, @Telefone, @Email)";
+            try
+            {
+                IDbCommand insertCmd = conexao.CreateCommand();
+                insertCmd.CommandText = "insert into Craques (Username, Posicao, DataCadastro, NivelAtaque, NivelDefesa, Telefone, Email) values (@Username, @Posicao, @DataCadastro, @NivelAtaque, @NivelDefesa, @Telefone, @Email)";
 
-            IDbDataParameter paramUsername = new SqlParameter("Username", craque.Username);
-            IDbDataParameter paramPosicao = new SqlParameter("Posicao", craque.Posicao);
-            IDbDataParameter paramDataCadastro = new SqlParameter("DataCadastro", craque.DataCadastro);
-            IDbDataParameter paramNivelAtaque = new SqlParameter("NivelAtaque", craque.NivelAtaque);
-            IDbDataParameter paramNivelDefesa = new SqlParameter("NivelDefesa", craque.NivelDefesa);
-            IDbDataParameter paramTelefone = new SqlParameter("Telefone", craque.Telefone);
-            IDbDataParameter paramEmail = new SqlParameter("Email", craque.Email);
-            insertCmd.Parameters.Add(paramUsername);
-            insertCmd.Parameters.Add(paramPosicao);
-            insertCmd.Parameters.Add(paramDataCadastro);
-            insertCmd.Parameters.Add(paramNivelAtaque);
-            insertCmd.Parameters.Add(paramNivelDefesa);
-            insertCmd.Parameters.Add(paramTelefone);
-            insertCmd.Parameters.Add(paramEmail);
+                IDbDataParameter paramUsername = new SqlParameter("Username", craque.Username);
+                IDbDataParameter paramPosicao = new SqlParameter("Posicao", craque.Posicao);
+                IDbDataParameter paramDataCadastro = new SqlParameter("DataCadastro", craque.DataCadastro);
+                IDbDataParameter paramNivelAtaque = new SqlParameter("NivelAtaque", craque.NivelAtaque);
+                IDbDataParameter paramNivelDefesa = new SqlParameter("NivelDefesa", craque.NivelDefesa);
+                IDbDataParameter paramTelefone = new SqlParameter("Telefone", craque.Telefone);
+                IDbDataParameter paramEmail = new SqlParameter("Email", craque.Email);
+                insertCmd.Parameters.Add(paramUsername);
+                insertCmd.Parameters.Add(paramPosicao);
+                insertCmd.Parameters.Add(paramDataCadastro);
+                insertCmd.Parameters.Add(paramNivelAtaque);
+                insertCmd.Parameters.Add(paramNivelDefesa);
+                insertCmd.Parameters.Add(paramTelefone);
+                insertCmd.Parameters.Add(paramEmail);
 
-            insertCmd.ExecuteNonQuery();
+                insertCmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                conexao.Close();
+            }
         }
 
         public void AtualizarCraqueDB(Craque craque)
         {
-            IDbCommand updateCmd = conexao.CreateCommand();
-            updateCmd.CommandText = "update Craques set Username = @Username, Posicao = @Posicao, NivelAtaque = @NivelAtaque, NivelDefesa = @NivelDefesa, Telefone = @Telefone, Email = @Email where Id = @Id";
+            try
+            {
+                IDbCommand updateCmd = conexao.CreateCommand();
+                updateCmd.CommandText = "update Craques set Username = @Username, Posicao = @Posicao, NivelAtaque = @NivelAtaque, NivelDefesa = @NivelDefesa, Telefone = @Telefone, Email = @Email where Id = @Id";
 
-            IDbDataParameter paramUsername = new SqlParameter("Username", craque.Username);
-            IDbDataParameter paramPosicao = new SqlParameter("Posicao", craque.Posicao);
-            IDbDataParameter paramDataCadastro = new SqlParameter("DataCadastro", craque.DataCadastro);
-            IDbDataParameter paramNivelAtaque = new SqlParameter("NivelAtaque", craque.NivelAtaque);
-            IDbDataParameter paramNivelDefesa = new SqlParameter("NivelDefesa", craque.NivelDefesa);
-            IDbDataParameter paramTelefone = new SqlParameter("Telefone", craque.Telefone);
-            IDbDataParameter paramEmail = new SqlParameter("Email", craque.Email);
-            updateCmd.Parameters.Add(paramUsername);
-            updateCmd.Parameters.Add(paramPosicao);
-            updateCmd.Parameters.Add(paramDataCadastro);
-            updateCmd.Parameters.Add(paramNivelAtaque);
-            updateCmd.Parameters.Add(paramNivelDefesa);
-            updateCmd.Parameters.Add(paramTelefone);
-            updateCmd.Parameters.Add(paramEmail);
+                IDbDataParameter paramUsername = new SqlParameter("Username", craque.Username);
+                IDbDataParameter paramPosicao = new SqlParameter("Posicao", craque.Posicao);
+                IDbDataParameter paramDataCadastro = new SqlParameter("DataCadastro", craque.DataCadastro);
+                IDbDataParameter paramNivelAtaque = new SqlParameter("NivelAtaque", craque.NivelAtaque);
+                IDbDataParameter paramNivelDefesa = new SqlParameter("NivelDefesa", craque.NivelDefesa);
+                IDbDataParameter paramTelefone = new SqlParameter("Telefone", craque.Telefone);
+                IDbDataParameter paramEmail = new SqlParameter("Email", craque.Email);
+                updateCmd.Parameters.Add(paramUsername);
+                updateCmd.Parameters.Add(paramPosicao);
+                updateCmd.Parameters.Add(paramDataCadastro);
+                updateCmd.Parameters.Add(paramNivelAtaque);
+                updateCmd.Parameters.Add(paramNivelDefesa);
+                updateCmd.Parameters.Add(paramTelefone);
+                updateCmd.Parameters.Add(paramEmail);
 
-            IDbDataParameter paramId = new SqlParameter("Id", craque.Id);
-            updateCmd.Parameters.Add(paramId);
+                IDbDataParameter paramId = new SqlParameter("Id", craque.Id);
+                updateCmd.Parameters.Add(paramId);
 
-            updateCmd.ExecuteNonQuery();
+                updateCmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                conexao.Close();
+            }
         }
 
         public void DeletarCraqueDB(int id)
         {
-            IDbCommand deleteCmd = conexao.CreateCommand();
-            deleteCmd.CommandText = "delete from Craques where Id = @Id";
+            try
+            {
+                IDbCommand deleteCmd = conexao.CreateCommand();
+                deleteCmd.CommandText = "delete from Craques where Id = @Id";
 
-            IDbDataParameter paramId = new SqlParameter("Id", id);
-            deleteCmd.Parameters.Add(paramId);
+                IDbDataParameter paramId = new SqlParameter("Id", id);
+                deleteCmd.Parameters.Add(paramId);
 
-            deleteCmd.ExecuteNonQuery();
+                deleteCmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                conexao.Close();
+            }
         }
     }
 }
