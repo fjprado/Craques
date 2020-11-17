@@ -21,7 +21,7 @@ namespace Craques.Controllers
         {
             try
             {
-                Craque craque = new Craque();
+                CraqueModel craque = new CraqueModel();
                 return Ok(craque.ListarCraque());
             }
             catch (Exception ex)
@@ -34,10 +34,18 @@ namespace Craques.Controllers
         // GET: api/Craque/5
         [HttpGet]
         [Route("Recuperar/{id}")]
-        public Craque Get(int id)
+        public IHttpActionResult RecuperarPorId(int id)
         {
-            Craque craque = new Craque();
-            return craque.ListarCraque(id).FirstOrDefault();
+            try
+            {
+                CraqueModel craque = new CraqueModel();
+                return Ok(craque.ListarCraque(id).FirstOrDefault());
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+
         }
 
         //[HttpGet]
@@ -47,7 +55,7 @@ namespace Craques.Controllers
         //    try
         //    {
         //        Craque craque = new Craque();
-        //        IEnumerable<Craque> craques = craque.ListarCraque().Where(item => item.Data == data || item.Username == username);
+        //        IEnumerable<CraqueDTO> craques = craque.ListarCraque().Where(item => item.Data == data || item.Username == username);
         //        if (!craques.Any())
         //        {
         //            return NotFound();
@@ -64,11 +72,11 @@ namespace Craques.Controllers
 
         // POST: api/Craque
         [HttpPost]
-        public IHttpActionResult Post(Craque craque)
+        public IHttpActionResult Post(CraqueDTO craque)
         {
             try
             {
-                Craque _craque = new Craque();
+                CraqueModel _craque = new CraqueModel();
                 _craque.Inserir(craque);
                 return Ok(_craque.ListarCraque());
             }
@@ -81,11 +89,11 @@ namespace Craques.Controllers
 
         // PUT: api/Craque/5
         [HttpPut]
-        public IHttpActionResult Put(int id, [FromBody] Craque craque)
+        public IHttpActionResult Put(int id, [FromBody] CraqueDTO craque)
         {
             try
             {
-                Craque _craque = new Craque();
+                CraqueModel _craque = new CraqueModel();
                 craque.Id = id;
                 _craque.Atualizar(craque);
                 return Ok(_craque.ListarCraque().FirstOrDefault(craq => craq.Id == id));
@@ -102,7 +110,7 @@ namespace Craques.Controllers
         {
             try
             {
-                Craque _craque = new Craque();
+                CraqueModel _craque = new CraqueModel();
 
                 _craque.Deletar(id);
                 return Ok($"Craque ID {id} removido com sucesso");

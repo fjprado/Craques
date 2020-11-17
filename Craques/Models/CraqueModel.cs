@@ -11,16 +11,9 @@ using System.Web.Hosting;
 
 namespace Craques.Models
 {
-    public class Craque
+    public class CraqueModel
     {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public string Posicao { get; set; }
-        public DateTime DataCadastro { get; set; }
-        public int NivelAtaque { get; set; }
-        public int NivelDefesa { get; set; }
-        public string Telefone { get; set; }
-        public string Email { get; set; }
+
 
         //Banco de dados com arquivo Base.json - Listar dados
         //public List<Craque> ListarCraque()
@@ -31,7 +24,7 @@ namespace Craques.Models
         //    return listaCraques;
         //}
 
-        public List<Craque> ListarCraque(int? id = null)
+        public List<CraqueDTO> ListarCraque(int? id = null)
         {
             try
             {
@@ -58,7 +51,7 @@ namespace Craques.Models
         //    return Craque;
         //}
 
-        public void Inserir(Craque craque)
+        public void Inserir(CraqueDTO craque)
         {
             craque.DataCadastro = DateTime.Now;
             try
@@ -93,16 +86,16 @@ namespace Craques.Models
         //    return Craque;
         //}
 
-        public bool RescreverArquivo(List<Craque> listaCraques)
-        {
-            var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
-            var json = JsonConvert.SerializeObject(listaCraques, Formatting.Indented);
-            File.WriteAllText(caminhoArquivo, json);
+        //public bool RescreverArquivo(List<CraqueDTO> listaCraques)
+        //{
+        //    var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
+        //    var json = JsonConvert.SerializeObject(listaCraques, Formatting.Indented);
+        //    File.WriteAllText(caminhoArquivo, json);
 
-            return true;
-        }
+        //    return true;
+        //}
 
-        public void Atualizar(Craque craque)
+        public void Atualizar(CraqueDTO craque)
         {
             try
             {

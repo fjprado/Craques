@@ -18,9 +18,9 @@ namespace Craques.Models
             conexao.Open();
         }
 
-        public List<Craque> ListarCraquesDB(int? id)
+        public List<CraqueDTO> ListarCraquesDB(int? id)
         {
-            var listaCraques = new List<Craque>();
+            var listaCraques = new List<CraqueDTO>();
             try
             {
                 IDbCommand selectCmd = conexao.CreateCommand();
@@ -32,7 +32,7 @@ namespace Craques.Models
                 IDataReader resultado = selectCmd.ExecuteReader();
                 while (resultado.Read())
                 {
-                    var craqueDb = new Craque
+                    var craqueDb = new CraqueDTO
                     {
                         Id = Convert.ToInt32(resultado["Id"]),
                         Username = Convert.ToString(resultado["Username"]),
@@ -59,7 +59,7 @@ namespace Craques.Models
             }
         }
 
-        public void InserirCraqueDB(Craque craque)
+        public void InserirCraqueDB(CraqueDTO craque)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace Craques.Models
             }
         }
 
-        public void AtualizarCraqueDB(Craque craque)
+        public void AtualizarCraqueDB(CraqueDTO craque)
         {
             try
             {

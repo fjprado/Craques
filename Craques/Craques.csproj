@@ -110,8 +110,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Craque.cs" />
+    <Compile Include="Models\CraqueModel.cs" />
     <Compile Include="Models\CraqueDAO.cs" />
+    <Compile Include="Models\CraqueDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
