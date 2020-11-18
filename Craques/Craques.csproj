@@ -111,8 +111,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CraqueModel.cs" />
-    <Compile Include="Models\CraqueDAO.cs" />
-    <Compile Include="Models\CraqueDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -125,7 +123,19 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\App.Repository\Craques.Repository.csproj">
+      <Project>{b584594c-320b-4e7c-984a-b4b8c9526c54}</Project>
+      <Name>Craques.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Craques.Domain\Craques.Domain.csproj">
+      <Project>{3742e897-20a4-4ff1-90b3-8277bc73e383}</Project>
+      <Name>Craques.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTOs\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
