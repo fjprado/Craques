@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
+using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using Owin;
 using Swashbuckle.Application;
@@ -31,7 +32,23 @@ namespace Craques
 
             app.UseCors(CorsOptions.AllowAll);
 
+            AtivandoAccessTokens(app);
+
             app.UseWebApi(config);
+        }
+
+        private void AtivandoAccessTokens(IAppBuilder app)
+        {
+            var opcoesConfiguracaoToken = new OAuthAuthorizationServerOptions()
+            {
+                AllowInsecureHttp = true,
+                TokenEndpointPath = new PathString("/token"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromHours(1),
+                Provider= new ProviderDeTokenDeAcesso()
+            };
+
+            app.UseOAuthAuthorizationServer(opcoesConfiguracaoToken);
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
         }
     }
 }
