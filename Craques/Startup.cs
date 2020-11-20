@@ -5,6 +5,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Newtonsoft.Json.Serialization;
 using Owin;
+using Swashbuckle.Application;
 
 [assembly: OwinStartup(typeof(Craques.Startup))]
 
@@ -25,6 +26,8 @@ namespace Craques
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.EnableSwagger(c => { c.SingleApiVersion("v1", "Craques"); c.IncludeXmlComments(AppDomain.CurrentDomain.BaseDirectory + @"\bin\Craques.xml"); });
 
             app.UseCors(CorsOptions.AllowAll);
 
