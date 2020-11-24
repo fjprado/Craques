@@ -14,6 +14,7 @@ namespace Craques.Controllers
         // GET: api/Craque
         [HttpGet]
         [Route("Recuperar")]
+        [Authorize]
         public IHttpActionResult Recuperar()
         {
             try

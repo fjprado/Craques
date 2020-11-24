@@ -26,7 +26,7 @@ namespace Craques.Repository
                 if (id == null)
                     selectCmd.CommandText = "select * from Craques";
                 else
-                    selectCmd.CommandText = $"select * from Craques where id = {id}";
+                    selectCmd.CommandText = $"select * from Craques where Id = {id}";
 
                 IDataReader resultado = selectCmd.ExecuteReader();
                 while (resultado.Read())
@@ -45,7 +45,6 @@ namespace Craques.Repository
 
                     listaCraques.Add(craqueDb);
                 }
-
                 return listaCraques;
             }
             catch (Exception ex)

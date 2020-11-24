@@ -20,7 +20,7 @@ namespace Craques.Domain
         public int NivelDefesa { get; set; }
         public string Telefone { get; set; }
         [Required(ErrorMessage = "Email é de preenchimento obrigatório.")]
-        [RegularExpression(@"/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/", ErrorMessage = "O email não está em um formato válido.")]
+        //[RegularExpression(@"/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/", ErrorMessage = "O email não está em um formato válido.")]
         public string Email { get; set; }   
     }
 }
