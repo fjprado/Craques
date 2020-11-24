@@ -23,9 +23,11 @@ namespace Craques
             {
                 context.SetError("invalid_grant", "Usuario não encontrado ou senha incorreta");
             }
-
-            var identidadeUsuario = new ClaimsIdentity(context.Options.AuthenticationType);
-            context.Validated(identidadeUsuario);
+            else
+            {
+                var identidadeUsuario = new ClaimsIdentity(context.Options.AuthenticationType);
+                context.Validated(identidadeUsuario);
+            }
         }
     }
 }
