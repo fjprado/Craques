@@ -13,8 +13,9 @@ namespace Craques
         {
             return new List<Usuario>
             {
-                new Usuario { Nome="fernando", Senha = "123456"},
-                new Usuario { Nome="ana", Senha= "654321"}
+                new Usuario { Nome="torres", Senha = "111111", Funcoes = new string[] {Funcao.Craque} },
+                new Usuario { Nome="fernando", Senha = "123456", Funcoes = new string[] {Funcao.Manager, Funcao.Administrador} },
+                new Usuario { Nome="ana", Senha= "654321", Funcoes = new string[] {Funcao.Manager} }
             };
         }
     }
@@ -22,5 +23,13 @@ namespace Craques
     {
         public string Nome { get; set; }
         public string Senha { get; set; }
+        public string[] Funcoes { get; set; }
+    }
+
+    public class Funcao
+    {
+        public const string Craque = "craque";
+        public const string Manager = "manager";
+        public const string Administrador = "administrador";
     }
 }
