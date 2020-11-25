@@ -28,8 +28,8 @@ namespace Craques
 
     public class Funcao
     {
-        public const string Craque = "craque";
-        public const string Manager = "manager";
-        public const string Administrador = "administrador";
+        public const string Craque = "Craque";
+        public const string Manager = "Manager";
+        public const string Administrador = "Administrador";
     }
 }

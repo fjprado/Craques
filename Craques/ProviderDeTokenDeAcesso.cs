@@ -19,13 +19,20 @@ namespace Craques
                 .FirstOrDefault(x => x.Nome == context.UserName
                                 && x.Senha == context.Password);
 
-            if(usuario == null)
+            if (usuario == null)
             {
                 context.SetError("invalid_grant", "Usuario não encontrado ou senha incorreta");
                 return;
             }
-                var identidadeUsuario = new ClaimsIdentity(context.Options.AuthenticationType);
-                context.Validated(identidadeUsuario);
+
+            var identidadeUsuario = new ClaimsIdentity(context.Options.AuthenticationType);
+
+            foreach (var funcao in usuario.Funcoes)
+            {
+                identidadeUsuario.AddClaim(new Claim(ClaimTypes.Role, funcao));
+            }
+
+            context.Validated(identidadeUsuario);
         }
     }
 }
